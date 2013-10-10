@@ -19,35 +19,30 @@ Partial Class _Default
         Dim afterTax As Double = tbAfterTaxDeducitons.Text
 
         Dim grossPay As Double
+        Dim taxblePay As Double
+        Dim tax As Double
 
         grossPay = hourlyWage * hoursWorked
 
         If tbPreTaxDeductions.Text <> String.Empty Then
-            grossPay = grossPay - preTax
+            taxblePay = grossPay - preTax
         End If
 
 
-        Dim taxRate As Double
 
         If grossPay < 500 Then
-            taxRate = 0.18
+            tax = taxblePay * 0.18
         Else
-            taxRate = 0.22
+            tax = taxblePay * 0.22
         End If
 
+        Dim pay As Double
         Dim netPay As Double
 
-        netPay = grossPay
+        pay = taxblePay - tax
 
-        If tbAfterTaxDeducitons.Text <> String.Empty Then
-            Dim tax As Double
-
-            tax = afterTax * taxRate
-            tax = afterTax + tax
-
-            netPay = netPay - tax
-
-        End If
+        netPay = pay - afterTax
+        
 
 
         lblResults.Text = "Your Net Pay is $" + netPay.ToString()
